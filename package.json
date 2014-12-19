@@ -1,0 +1,19 @@
+{
+  "name": "koa-frouter",
+  "version": "0.1.0",
+  "description": "File/Folder as `path`, another router middleware for koa.",
+  "main": "index.js",
+  "keywords": [
+    "koa",
+    "route",
+    "router",
+    "frouter"
+  ],
+  "dependencies": {
+    "koa-route": "^2.4.0",
+    "ls-sync": "~0.1.0"
+  },
+  "author": "nswbmw",
+  "license": "MIT",
+  "repository": "https://github.com/MangroveTech/koa-frouter.git"
+}
