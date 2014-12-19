@@ -8,7 +8,7 @@ File/Folder as `path`, another router middleware for koa.
 
 ### Example
 
-** File tree **
+**File tree**
 
 ```
 ├── app.js
@@ -28,25 +28,25 @@ File/Folder as `path`, another router middleware for koa.
     └── links.js
 ```
 
-** *.js **
+**\*.js**
 
 ```
 exports.post = function* (uid, id) { ... }
 ```
 
-** *id.js **
+**\*id.js**
 
 ```
 exports.get = function* (id) { ... }
 ```
 
-** links.js **
+**links.js**
 
 ```
 exports.get = function* () { ... }
 ```
 
-** app.js **
+**app.js**
 
 ```
 var koa = require('koa');
