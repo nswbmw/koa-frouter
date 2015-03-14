@@ -1,3 +1,3 @@
 exports.get = function* (id) {
-    this.body = 'id: ' + id;
-}
+  this.body = 'Month id: ' + id + '\npathRegexp: ' + exports.get.pathRegexp;
+};

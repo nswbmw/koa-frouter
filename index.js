@@ -2,19 +2,35 @@ var path = require('path');
 var ls = require('ls-sync');
 var route = require('koa-route');
 
-module.exports = frouter;
+module.exports = function (app, options) {
+  if (typeof options === 'string') {
+    options = {root: options};
+  } else if (!options || !options.root) {
+    throw new Error('`root` config required.');
+  }
+  var wildcard = options.wildcard || '*';
+  var root = options.root;
 
-function frouter(dir) {
-  if (!dir) throw new Error('You must specify a route path.');
-  return function (app) {
-    ls(dir).forEach(function (file) {
-      var exportFuns = require(path.join(process.cwd(), file));
-      var url = file.replace(path.normalize(dir), '').replace(/\\/g, '/').replace(/\/\*/g, '/:_').split('.')[0];
-      Object.keys(exportFuns).forEach(function (method) {
-        try {
-          app.use(route[method.toLowerCase()](url, exportFuns[method]));
-        } catch (e) {}
-      });
-    });
+  ls(root).forEach(function (filePath) {
+    var exportFuncs = require(filePath);
+    var pathRegexp = formatPath(filePath, root, wildcard);
+    for (var method in exportFuncs) {
+      try {
+        exportFuncs[method].pathRegexp = pathRegexp;
+        app.use(route[method.toLowerCase()](pathRegexp, exportFuncs[method]));
+      } catch (e) {}
+    };
+  });
+
+  return function* frouter(next) {
+    yield* next;
   };
 };
+
+function formatPath(filePath, root, wildcard) {
+  return filePath
+    .replace(path.join(process.cwd(), root), '')
+    .replace(/\\/g, '/')
+    .replace(new RegExp('/\\' + wildcard, 'g'), '/:')
+    .split('.')[0];
+}

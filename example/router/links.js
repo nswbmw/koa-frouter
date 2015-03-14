@@ -1,3 +1,3 @@
 exports.get = function* () {
-    this.body = 'links';
+    this.body = 'This is links' + '\npathRegexp: ' + exports.get.pathRegexp;
 }

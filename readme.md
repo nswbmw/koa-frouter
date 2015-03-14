@@ -6,6 +6,16 @@ File/Folder as `path`, another router middleware for koa.
 
     npm i koa-frouter --save
 
+### Usage
+
+```
+router(app, options)
+```
+- app: {Object} koa instance.
+- options: {Object|String->root}
+  - root: {String} router directory
+  - wildcard: {String} will replace it with ':'
+
 ### Example
 
 **File tree**
@@ -16,8 +26,8 @@ File/Folder as `path`, another router middleware for koa.
 ├── ...
 └── router
     ├── users
-    │   └── *
-    │       └── *.js
+    │   └── *uid.js
+    │
     ├── posts
     │   ├── month
     │   │   └── *id.js
@@ -28,10 +38,10 @@ File/Folder as `path`, another router middleware for koa.
     └── links.js
 ```
 
-**\*.js**
+**\*uid.js**
 
 ```
-exports.post = function* (uid, id) { ... }
+exports.post = function* (uid) { ... }
 ```
 
 **\*id.js**
@@ -50,10 +60,12 @@ exports.get = function* () { ... }
 
 ```
 var koa = require('koa');
-var router = require('koa-frouter')('router');
+var router = require('koa-frouter');
 
 var app = koa();
-router(app);
+app.use(router(app, {
+  root: './router'
+}));
 app.listen(3000);
 ```
 equal to:
@@ -62,7 +74,7 @@ equal to:
 var koa = require('koa');
 var _ = require('koa-route');
 
-var users = require('./router/users/*/*.js');
+var users = require('./router/users/*uid.js');
 var month = require('./router/posts/month/*id.js');
 var week = require('./router/posts/week/*id.js');
 var day = require('./router/posts/day/*id.js');
@@ -70,7 +82,7 @@ var links = require('./router/links.js');
 
 var app = koa();
 
-app.use(_.post('/users/:uid/:id', users.post));
+app.use(_.post('/users/:uid', users.post));
 app.use(_.get('/posts/month/:id', month.get));
 app.use(_.get('/posts/week/:id', week.get));
 app.use(_.get('/posts/day/:id', day.get));
@@ -78,6 +90,10 @@ app.use(_.get('/links', links.get));
 
 app.listen(3000);
 ```
+
+### Test
+
+    npm test
 
 ### License
 
