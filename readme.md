@@ -35,6 +35,7 @@ router(app, options)
     │   │   └── *id.js
     │   └── day
     │       └── *id.js
+    ├── index.js
     └── links.js
 ```
 
@@ -48,6 +49,12 @@ exports.post = function* (uid) { ... }
 
 ```
 exports.get = function* (id) { ... }
+```
+
+**index.js**
+
+```
+exports.get = function* () { ... }
 ```
 
 **links.js**
@@ -79,6 +86,7 @@ var month = require('./router/posts/month/*id.js');
 var week = require('./router/posts/week/*id.js');
 var day = require('./router/posts/day/*id.js');
 var links = require('./router/links.js');
+var index = require('./router/index.js');
 
 var app = koa();
 
@@ -87,6 +95,8 @@ app.use(_.get('/posts/month/:id', month.get));
 app.use(_.get('/posts/week/:id', week.get));
 app.use(_.get('/posts/day/:id', day.get));
 app.use(_.get('/links', links.get));
+app.use(_.get('/', index.get));
+app.use(_.get('/index', index.get));
 
 app.listen(3000);
 ```

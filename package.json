@@ -1,6 +1,6 @@
 {
   "name": "koa-frouter",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "File/Folder as `path`, another router middleware for koa.",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "frouter"
   ],
   "dependencies": {
+    "koa-rewrite": "^1.1.0",
     "koa-route": "^2.4.0",
     "ls-sync": "^0.2.1"
   },

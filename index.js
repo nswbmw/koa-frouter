@@ -1,6 +1,7 @@
 var path = require('path');
 var ls = require('ls-sync');
 var route = require('koa-route');
+var rewrite = require('koa-rewrite');
 
 module.exports = function (app, options) {
   if (typeof options === 'string') {
@@ -10,6 +11,9 @@ module.exports = function (app, options) {
   }
   var wildcard = options.wildcard || '*';
   var root = options.root;
+
+  //rewrite / to /index
+  app.use(rewrite('/', '/index'));
 
   ls(root).forEach(function (filePath) {
     var exportFuncs = require(filePath);
