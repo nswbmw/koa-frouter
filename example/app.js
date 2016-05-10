@@ -4,7 +4,8 @@ var router = require('..');
 var app = koa();
 
 app.use(router(app, {
-  root: './example/router'
+  root: './example/router',
+  wildcard: '_'
 }));
 
 app.listen(3000, function () {

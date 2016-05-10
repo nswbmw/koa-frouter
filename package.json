@@ -1,6 +1,6 @@
 {
   "name": "koa-frouter",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "File/Folder as `path`, another router middleware for koa.",
   "main": "index.js",
   "scripts": {
