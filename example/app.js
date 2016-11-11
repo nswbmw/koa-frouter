@@ -5,6 +5,7 @@ var app = koa();
 
 app.use(router(app, {
   root: './example/router',
+  // root: require('path').join(__dirname, 'router'),
   wildcard: '_'
 }));
 
