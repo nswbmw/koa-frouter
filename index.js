@@ -16,6 +16,9 @@ module.exports = function (app, options) {
   app.use(rewrite('/', '/index'));
 
   ls(root).forEach(function (filePath) {
+    if (path.extname(filePath) !== '.js') {
+      return;
+    }
     var exportFuncs = require(filePath);
     var pathRegexp = formatPath(filePath, root, wildcard);
     for (var method in exportFuncs) {
